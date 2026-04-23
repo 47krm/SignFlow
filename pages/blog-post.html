@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The 7 Design Principles That Separate Good from Great — Signflow Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+<style>
+    /* article page styles */
+    .article-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 3.5rem;
+      align-items: start;
+      padding: var(--space-2xl) 0;
+    }
+    .article-body { min-width: 0; }
+    .article-sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + 1.5rem);
+    }
+
+    /* Hero image */
+    .article-hero-img {
+      width: 100%;
+      aspect-ratio: 16/7;
+      object-fit: cover;
+      border-radius: var(--radius-xl);
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Meta */
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .article-meta .blog-cat  { font-size: 0.78rem; }
+    .article-meta .meta-sep  { color: var(--clr-border); }
+    .article-meta .meta-item { font-size: 0.82rem; color: var(--clr-muted); }
+
+    /* Title */
+    .article-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      color: var(--clr-dark);
+    }
+
+    /* Author */
+    .article-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+      margin-bottom: 2.5rem;
+    }
+    .author-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-weight: 700; font-size: 0.95rem; color: var(--clr-dark); }
+    .author-title { font-size: 0.8rem; color: var(--clr-muted); }
+    .article-share {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--clr-muted);
+    }
+    .share-btn {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--clr-bg);
+      border: 1px solid var(--clr-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      color: var(--clr-dark);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .share-btn:hover { background: var(--clr-primary); color: #fff; border-color: var(--clr-primary); }
+
+    /* Prose content */
+    .article-content { line-height: 1.85; }
+    .article-content p { margin-bottom: 1.5rem; font-size: 1.02rem; }
+    .article-content h2 { font-size: 1.6rem; margin: 2.5rem 0 1rem; }
+    .article-content h3 { font-size: 1.25rem; margin: 2rem 0 0.75rem; }
+    .article-content ul, .article-content ol {
+      margin: 0 0 1.5rem 1.25rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .article-content li { font-size: 1rem; line-height: 1.75; }
+    .article-content ul li::marker { color: var(--clr-primary); }
+    .article-content ol li::marker { color: var(--clr-primary); font-weight: 700; }
+    .article-content blockquote {
+      margin: 2rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 4px solid var(--clr-primary);
+      background: var(--clr-primary-light);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--clr-dark);
+      line-height: 1.7;
+    }
+    .article-content .callout {
+      background: var(--clr-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+      display: flex;
+      gap: 0.75rem;
+    }
+    .article-content .callout-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 2px; }
+    .article-content .callout p { margin-bottom: 0; font-size: 0.92rem; }
+    .article-content strong { color: var(--clr-dark); font-weight: 700; }
+    .article-content a { color: var(--clr-primary); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Tags */
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--clr-border);
+    }
+    .article-tags span { font-size: 0.8rem; font-weight: 600; color: var(--clr-muted); }
+
+    /* Author bio card */
+    .author-bio-card {
+      background: var(--clr-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.25rem;
+    }
+    .author-bio-card .avatar { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .author-bio-card .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-bio-card h4 { font-family: var(--font-body); margin-bottom: 0.25rem; }
+    .author-bio-card .role { font-size: 0.8rem; color: var(--clr-primary); font-weight: 600; margin-bottom: 0.6rem; }
+    .author-bio-card p { font-size: 0.88rem; margin-bottom: 0; }
+
+    /* Sidebar widgets */
+    .sidebar-widget {
+      background: #fff;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .sidebar-widget h4 { font-family: var(--font-body); font-size: 0.9rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--clr-border); }
+    .related-post {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .related-post:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .related-post-img { width: 58px; height: 58px; border-radius: var(--radius-sm); overflow: hidden; flex-shrink: 0; }
+    .related-post-img img { width: 100%; height: 100%; object-fit: cover; }
+    .related-post-title { font-size: 0.82rem; font-weight: 600; color: var(--clr-dark); line-height: 1.4; margin-bottom: 0.2rem; }
+    .related-post-title:hover { color: var(--clr-primary); }
+    .related-post-date { font-size: 0.74rem; color: var(--clr-muted); }
+
+    /* TOC */
+    .toc-list { display: flex; flex-direction: column; gap: 0.4rem; }
+    .toc-list a {
+      font-size: 0.84rem;
+      color: var(--clr-body);
+      padding: 0.2rem 0;
+      padding-left: 0.75rem;
+      border-left: 2px solid var(--clr-border);
+      display: block;
+      transition: var(--transition-fast);
+    }
+    .toc-list a:hover, .toc-list a.toc-active {
+      color: var(--clr-primary);
+      border-left-color: var(--clr-primary);
+    }
+
+    /* Progress bar reading indicator */
+    .reading-progress {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0; right: 0;
+      height: 3px;
+      background: var(--clr-border);
+      z-index: 998;
+    }
+    .reading-progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* Number callout */
+    .principle-block {
+      display: flex;
+      gap: 1.25rem;
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: #fff;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      transition: var(--transition);
+    }
+    .principle-block:hover { box-shadow: var(--shadow-md); border-color: var(--clr-primary); }
+    .principle-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--clr-primary-light);
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 44px;
+    }
+    .principle-block:hover .principle-num { color: var(--clr-primary); }
+    .principle-block h3 { font-family: var(--font-body); font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .principle-block p  { font-size: 0.9rem; margin: 0; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-layout { grid-template-columns: 1fr; }
+      .article-sidebar { position: static; }
+    }
+    @media (max-width: 600px) {
+      .article-author { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .article-share  { margin-left: 0; }
+      .author-bio-card { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-loader"><div class="loader-logo">Signflow</div></div>
+
+<div class="reading-progress"><div class="reading-progress-fill" id="readingFill"></div></div>
+
+<header class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><span class="logo-dot"></span>Signflow</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a><a href="portfolio.html">Portfolio</a>
+      <a href="blog.html" class="active">Blog</a><a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions"><a href="contact.html" class="btn btn-primary btn-sm">Get Started</a></div>
+    <button class="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="pricing.html">Pricing</a><a href="portfolio.html">Portfolio</a><a href="blog.html">Blog</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-primary">Get Started</a>
+</nav>
+
+<div style="background:var(--clr-bg);border-bottom:1px solid var(--clr-border);padding:calc(var(--nav-height) + 1rem) 0 1rem;">
+  <div class="container">
+    <div class="breadcrumb" style="justify-content:flex-start;">
+      <a href="index.html">Home</a><span>/</span>
+      <a href="blog.html">Blog</a><span>/</span>
+      <span>The 7 Design Principles</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="article-layout">
+
+    <article class="article-body anim-fade-up">
+      <img class="article-hero-img" src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1200&q=85" alt="Design Principles" />
+
+      <div class="article-meta">
+        <span class="blog-cat">Design</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">📅 May 12, 2025</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">⏱ 8 min read</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">💬 24 comments</span>
+      </div>
+
+      <h1 class="article-title">The 7 Design Principles That Separate Good from Great</h1>
+
+      <div class="article-author">
+        <div class="author-avatar"><img src="https://i.pravatar.cc/80?img=33" alt="Alexandra Chen" /></div>
+        <div>
+          <div class="author-name">Alexandra Chen</div>
+          <div class="author-title">CEO & Design Lead at Signflow</div>
+        </div>
+        <div class="article-share">
+          <span>Share:</span>
+          <button class="share-btn" aria-label="Share on Twitter">𝕏</button>
+          <button class="share-btn" aria-label="Share on LinkedIn">in</button>
+          <button class="share-btn" data-copy="https://signflow.io/blog/7-design-principles" aria-label="Copy link">🔗</button>
+        </div>
+      </div>
+
+      <div class="article-content">
+        <p>Most websites look decent. A few look extraordinary. After analyzing over 500 high-converting websites — and designing dozens ourselves — we've identified the exact principles that separate them. Some are obvious. Some will surprise you.</p>
+
+        <p>Design isn't decoration. It's decision-making made visible. Every pixel, every spacing choice, every color combination communicates something to your visitor, whether you intended it to or not.</p>
+
+        <blockquote>
+          "Design is not just what it looks like and feels like. Design is how it works." — Steve Jobs
+        </blockquote>
+
+        <p>Here are the seven principles we've found matter most — and how to apply them immediately, regardless of your skill level.</p>
+
+        <h2 id="principle-1">The 7 Principles</h2>
+
+        <div class="principle-block">
+          <div class="principle-num">01</div>
+          <div>
+            <h3>Hierarchy tells the story</h3>
+            <p>Your most important message should be visually dominant. If everything screams for attention, nothing gets it. Use size, weight, and contrast to create a clear visual path from most important to least. Test it: squint at your design. What do you see first? That should be your primary message.</p>
+          </div>
+        </div>
+
+        <div class="principle-block">
+          <div class="principle-num">02</div>
+          <div>
+            <h3>Whitespace is not wasted space</h3>
+            <p>Amateur designers fill space. Expert designers leave it deliberately. Whitespace creates breathing room, groups related elements, and directs attention. The most premium-feeling brands use generous whitespace — it signals confidence and quality.</p>
+          </div>
+        </div>
+
+        <div class="principle-block">
+          <div class="principle-num">03</div>
+          <div>
+            <h3>Consistency builds trust</h3>
+            <p>Every inconsistency — a different button style, an unexpected font, an off-brand color — erodes trust. Your design system should be a strict vocabulary. Use a limited palette, defined type scale, and consistent spacing. Constraints are features, not limitations.</p>
+          </div>
+        </div>
+
+        <div class="principle-block">
+          <div class="principle-num">04</div>
+          <div>
+            <h3>Color communicates before content does</h3>
+            <p>Visitors form a visual impression in under 50 milliseconds — before they read a single word. Your color palette sets the emotional tone. Blue signals trust. Green signals growth. Dark themes signal premium or technical. Choose intentionally and limit yourself to 2–3 core colors.</p>
+          </div>
+        </div>
+
+        <div class="principle-block">
+          <div class="principle-num">05</div>
+          <div>
+            <h3>Typography is 90% of design</h3>
+            <p>A well-chosen typeface with good sizing, line-height, and letter-spacing will outperform a mediocre design with beautiful imagery every time. Invest in typography first. Use a display font for headlines and a humanist sans for body text. Never set body text above 18px or below 15px.</p>
+          </div>
+        </div>
+
+        <div class="principle-block">
+          <div class="principle-num">06</div>
+          <div>
+            <h3>Motion adds meaning, not decoration</h3>
+            <p>Animations should communicate — revealing new content, confirming actions, providing feedback. If removing an animation doesn't change the user's understanding, it probably shouldn't be there. One excellent, purposeful transition is worth more than ten decorative ones.</p>
+          </div>
+        </div>
+
+        <div class="principle-block">
+          <div class="principle-num">07</div>
+          <div>
+            <h3>Design for the worst case first</h3>
+            <p>What does your design look like on a slow 3G connection? With accessibility settings on? On a tiny phone? Great design works everywhere — it's a minimum bar, not a bonus. Test on real devices, at real speeds, with real users before you call anything done.</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="callout-icon">💡</span>
+          <p><strong>Quick win:</strong> Run your website through <a href="#">Google PageSpeed Insights</a>, <a href="#">Lighthouse</a>, and <a href="#">Wave (accessibility)</a> right now. Fix the top 3 issues from each. The improvements to your design and performance will be immediate and significant.</p>
+        </div>
+
+        <h2 id="conclusion">Putting it together</h2>
+        <p>These principles don't operate in isolation — they compound. A site with excellent hierarchy AND generous whitespace AND consistent typography communicates premium quality at every touchpoint. The gap between "looks decent" and "looks extraordinary" is usually not one big decision but twenty small ones, each made with intention.</p>
+
+        <p>Pick one principle this week. Apply it obsessively. Then move to the next. In seven weeks, your design will be unrecognizable — in the best possible way.</p>
+
+        <div class="article-tags">
+          <span>Tagged:</span>
+          <a href="#" class="tag">Design</a>
+          <a href="#" class="tag">Typography</a>
+          <a href="#" class="tag">UX</a>
+          <a href="#" class="tag">Web Design</a>
+          <a href="#" class="tag">Best Practices</a>
+        </div>
+
+        <div class="author-bio-card">
+          <div class="avatar"><img src="https://i.pravatar.cc/100?img=33" alt="Alexandra Chen" /></div>
+          <div>
+            <h4>Alexandra Chen</h4>
+            <div class="role">CEO & Design Lead at Signflow</div>
+            <p>10+ years designing digital products at Stripe and Figma before founding Signflow. Passionate about design systems, accessibility, and the intersection of aesthetics and business outcomes.</p>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--clr-border);">
+          <a href="blog.html" class="card" style="padding:1.25rem;">
+            <div style="font-size:0.75rem;color:var(--clr-muted);margin-bottom:0.3rem;">← Previous</div>
+            <div style="font-size:0.88rem;font-weight:600;color:var(--clr-dark);">How to Build a Brand That People Actually Remember</div>
+          </a>
+          <a href="blog.html" class="card" style="padding:1.25rem;text-align:right;">
+            <div style="font-size:0.75rem;color:var(--clr-muted);margin-bottom:0.3rem;">Next →</div>
+            <div style="font-size:0.88rem;font-weight:600;color:var(--clr-dark);">Why Your Website's Load Time Is Killing Conversions</div>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <aside class="article-sidebar">
+      <div class="sidebar-widget">
+        <h4>Table of Contents</h4>
+        <div class="toc-list">
+          <a href="#principle-1">The 7 Principles</a>
+          <a href="#conclusion">Putting it Together</a>
+        </div>
+      </div>
+
+      <div class="sidebar-widget">
+        <h4>Related Articles</h4>
+        <div class="related-post">
+          <div class="related-post-img"><img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=120&q=80" alt="" /></div>
+          <div>
+            <a href="blog.html" class="related-post-title">How to Build a Brand People Remember</a>
+            <div class="related-post-date">Apr 14, 2025</div>
+          </div>
+        </div>
+        <div class="related-post">
+          <div class="related-post-img"><img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=120&q=80" alt="" /></div>
+          <div>
+            <a href="blog.html" class="related-post-title">User Research on a Budget: 5 Methods That Work</a>
+            <div class="related-post-date">Mar 18, 2025</div>
+          </div>
+        </div>
+        <div class="related-post">
+          <div class="related-post-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=120&q=80" alt="" /></div>
+          <div>
+            <a href="blog.html" class="related-post-title">Why Load Time Is Killing Your Conversions</a>
+            <div class="related-post-date">Apr 28, 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-widget" style="background:var(--gradient-primary);border:none;color:#fff;">
+        <h4 style="color:#fff;border-bottom-color:rgba(255,255,255,0.2);">Get weekly insights</h4>
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.8);margin-bottom:1rem;">Join 5,000+ designers who read our weekly newsletter.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="your@email.com" class="form-control" style="margin-bottom:0.75rem;background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff;" />
+          <button type="submit" class="btn btn-white" style="width:100%;justify-content:center;">Subscribe →</button>
+        </form>
+      </div>
+
+      <div class="sidebar-widget">
+        <h4>Topics</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+          <a href="#" class="tag">Design</a>
+          <a href="#" class="tag">Branding</a>
+          <a href="#" class="tag">SEO</a>
+          <a href="#" class="tag">Performance</a>
+          <a href="#" class="tag">UX</a>
+          <a href="#" class="tag">Business</a>
+          <a href="#" class="tag">Development</a>
+          <a href="#" class="tag">Strategy</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- cta -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="section-label">Work with us</div>
+      <h2>Want help applying these<br>principles to your site?</h2>
+      <p>Our design team would love to audit your site and give you a free improvement report.</p>
+      <div class="cta-buttons">
+        <a href="contact.html" class="btn btn-white btn-lg">Get a Free Audit</a>
+        <a href="blog.html"    class="btn btn-ghost btn-lg">Read More Articles</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo"><span class="logo-dot"></span>Signflow</a>
+        <p>Ultra modern design. Innovative core with endless possibilities.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="#">𝕏</a><a class="social-btn" href="#">in</a>
+          <a class="social-btn" href="#">⌥</a><a class="social-btn" href="#">◉</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Company</h5><ul class="footer-links">
+        <li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li><li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Services</h5><ul class="footer-links">
+        <li><a href="services.html">Web Design</a></li><li><a href="services.html">Branding</a></li>
+        <li><a href="services.html">SEO</a></li><li><a href="services.html">UI/UX</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Resources</h5><ul class="footer-links">
+        <li><a href="#">Documentation</a></li><li><a href="pricing.html">Pricing</a></li>
+        <li><a href="#">Changelog</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Signflow. All rights reserved.</p>
+      <div style="display:flex;gap:1.5rem;"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+<button class="back-to-top">↑</button>
+
+<script src="../js/main.js"></script>
+<script>
+  // Reading progress for article page
+  window.addEventListener('scroll', () => {
+    const article = document.querySelector('.article-body');
+    if (!article) return;
+    const rect   = article.getBoundingClientRect();
+    const total  = article.offsetHeight - window.innerHeight;
+    const scrolled = Math.max(0, -rect.top);
+    const pct    = Math.min((scrolled / total) * 100, 100);
+    document.getElementById('readingFill').style.width = pct + '%';
+  }, { passive: true });
+
+  // TOC active link on scroll
+  const headings = document.querySelectorAll('.article-content h2[id]');
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const tocObs   = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('toc-active'));
+        const active = document.querySelector('.toc-list a[href="#' + entry.target.id + '"]');
+        active?.classList.add('toc-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  headings.forEach(h => tocObs.observe(h));
+</script>
+</body>
+</html>

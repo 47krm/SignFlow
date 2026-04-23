@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page Not Found | Signflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+<style>
+    body { background: var(--gradient-soft); min-height: 100vh; display: flex; flex-direction: column; }
+    .error-page {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--nav-height) 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .error-bg-num {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: clamp(12rem, 30vw, 28rem);
+      font-weight: 900;
+      color: rgba(37,99,235,0.05);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .error-content { position: relative; z-index: 1; max-width: 560px; }
+    .error-code {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 15vw, 9rem);
+      font-weight: 900;
+      line-height: 1;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+    .error-title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--clr-dark);
+      margin-bottom: 1rem;
+    }
+    .error-desc  { font-size: 1rem; color: var(--clr-body); margin-bottom: 2rem; line-height: 1.7; }
+    .error-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 2.5rem; }
+    .error-suggestions {
+      background: #fff;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: left;
+    }
+    .error-suggestions h4 {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--clr-muted);
+      margin-bottom: 1rem;
+    }
+    .suggestion-links { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .suggestion-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--clr-dark-2);
+      transition: var(--transition-fast);
+    }
+    .suggestion-link:hover { background: var(--clr-primary-light); color: var(--clr-primary); }
+    .suggestion-link .icon {
+      width: 28px; height: 28px;
+      background: var(--clr-bg);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    /* Floating elements */
+    .error-float {
+      position: absolute;
+      border-radius: var(--radius-md);
+      background: #fff;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--clr-border);
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--clr-dark);
+      display: flex; align-items: center; gap: 0.5rem;
+      animation: floatY 4s ease-in-out infinite;
+      white-space: nowrap;
+    }
+    .ef1 { top: 20%; left: 5%; animation-delay: 0s; }
+    .ef2 { top: 60%; right: 5%; animation-delay: 1.5s; }
+    .ef3 { bottom: 15%; left: 8%; animation-delay: 0.8s; }
+    @media (max-width: 600px) {
+      .error-float { display: none; }
+      .suggestion-links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-loader"><div class="loader-logo">Signflow</div></div>
+
+<header class="navbar scrolled" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><span class="logo-dot"></span>Signflow</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a><a href="portfolio.html">Portfolio</a>
+      <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions"><a href="contact.html" class="btn btn-primary btn-sm">Get Started</a></div>
+    <button class="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="pricing.html">Pricing</a><a href="portfolio.html">Portfolio</a><a href="blog.html">Blog</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-primary">Get Started</a>
+</nav>
+
+<main class="error-page">
+  <div class="error-bg-num">404</div>
+
+  
+  <div class="error-float ef1">
+    <span>🔍</span> Searching…
+  </div>
+  <div class="error-float ef2">
+    <span>🗺️</span> Lost in space
+  </div>
+  <div class="error-float ef3">
+    <span>🚀</span> Try another route
+  </div>
+
+  <div class="error-content anim-fade-up">
+    <div class="error-code">404</div>
+    <h1 class="error-title">This page doesn't exist</h1>
+    <p class="error-desc">The page you're looking for may have been moved, renamed, or deleted. Don't worry — there's plenty of great stuff to explore.</p>
+
+    <div class="error-links">
+      <a href="index.html" class="btn btn-primary btn-lg">← Back to Home</a>
+      <a href="contact.html"  class="btn btn-outline">Report Broken Link</a>
+    </div>
+
+    <div class="error-suggestions">
+      <h4>Maybe you were looking for…</h4>
+      <div class="suggestion-links">
+        <a href="index.html" class="suggestion-link">
+          <span class="icon">🏠</span> Homepage
+        </a>
+        <a href="about.html" class="suggestion-link">
+          <span class="icon">👋</span> About Us
+        </a>
+        <a href="services.html" class="suggestion-link">
+          <span class="icon">⚙️</span> Our Services
+        </a>
+        <a href="pricing.html" class="suggestion-link">
+          <span class="icon">💰</span> Pricing Plans
+        </a>
+        <a href="portfolio.html" class="suggestion-link">
+          <span class="icon">🎨</span> Portfolio
+        </a>
+        <a href="blog.html" class="suggestion-link">
+          <span class="icon">📝</span> Blog Articles
+        </a>
+        <a href="contact.html" class="suggestion-link">
+          <span class="icon">📧</span> Contact Us
+        </a>
+        <a href="pricing.html" class="suggestion-link">
+          <span class="icon">⭐</span> Get Started
+        </a>
+      </div>
+    </div>
+
+    
+    <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--clr-muted);">
+      Redirecting to homepage in <strong id="countdown">10</strong> seconds…
+      <a href="index.html" style="color:var(--clr-primary);text-decoration:underline;">Go now</a>
+    </p>
+  </div>
+</main>
+
+<footer style="padding:1.5rem 0;border-top:1px solid var(--clr-border);background:#fff;">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;font-size:0.82rem;color:var(--clr-muted);">
+    <a href="index.html" class="nav-logo" style="font-size:1rem;"><span class="logo-dot"></span>Signflow</a>
+    <p>© 2025 Signflow. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  // Countdown redirect
+  let count = 10;
+  const el  = document.getElementById('countdown');
+  const timer = setInterval(() => {
+    count--;
+    if (el) el.textContent = count;
+    if (count <= 0) {
+      clearInterval(timer);
+      window.location.href = 'index.html';
+    }
+  }, 1000);
+</script>
+</body>
+</html>
